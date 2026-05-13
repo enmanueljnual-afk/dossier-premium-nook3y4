@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOOK - Presentación de Unidades</title>
+    <!-- Cargamos React y Babel para que el navegador entienda el código JSX directamente -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        :root {
+            --gold: #B8963E;
+            --dark: #0C0C0C;
+            --light: #F0EBE0;
+            --muted: rgba(240,235,224,0.45);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            background-color: var(--dark);
+            color: var(--light);
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #root {
+            width: 100%;
+            max-width: 800px;
+            background: #141414;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(184,150,62,0.1);
+        }
+        .nav-bar {
+            display: flex;
+            border-bottom: 1px solid rgba(240,235,224,0.1);
+        }
+        .nav-item {
+            flex: 1;
+            padding: 15px 5px;
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            text-transform: uppercase;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+        }
+        .nav-item.active {
+            color: var(--gold);
+            border-bottom: 2px solid var(--gold);
+        }
+        .content {
+            flex: 1;
+            padding: 40px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .footer {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(240,235,224,0.05);
+        }
+        .btn-action {
+            background: var(--gold);
+            color: black;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+        .corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--gold);
+            opacity: 0.5;
+        }
+        .top-left { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+        .bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+        h1 { font-size: 60px; margin: 0; letter-spacing: 5px; font-weight: normal; }
+        .gold-text { color: var(--gold); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .unit-card {
+            background: #1c1c1c;
+            padding: 20px;
+            border: 1px solid rgba(240,235,224,0.1);
+            cursor: pointer;
+        }
+        .unit-card:hover { border-color: var(--gold); }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const App = () => {
+            const [slide, setSlide] = useState(0);
+            const labels = ["Inicio", "Unidades", "Detalles", "Contacto"];
+
+            const renderSlide = () => {
+                switch(slide) {
+                    case 0: return (
+                        <div style={{textAlign: 'center'}}>
+                            <div className="corner top-left"></div>
+                            <div className="gold-text" style={{letterSpacing: '4px', fontSize: '12px'}}>SAN ISIDRO</div>
+                            <h1>NOOK</h1>
+                            <div style={{width: '40px', height: '1px', background: 'var(--gold)', margin: '20px auto'}}></div>
+                            <div style={{fontSize: '18px', opacity: 0.8}}>Presentación de Unidades Premium</div>
+                            <div className="corner bottom-right"></div>
+                        </div>
+                    );
+                    case 1: return (
+                        <div>
+                            <div className="gold-text" style={{fontSize: '12px', marginBottom: '10px'}}>DISPONIBILIDAD</div>
+                            <h2 style={{fontSize: '32px', margin: '0 0 20px 0'}}>Elegí tu espacio</h2>
+                            <div className="grid">
+                                <div className="unit-card" onClick={() => setSlide(2)}>
+                                    <div className="gold-text">3 AMBIENTES</div>
+                                    <p style={{fontSize: '13px', opacity: 0.7}}>133 m² - Amplios balcones y suite principal.</p>
+                                </div>
+                                <div className="unit-card" style={{borderColor: 'var(--gold)'}} onClick={() => setSlide(2)}>
+                                    <div className="gold-text">4 AMBIENTES</div>
+                                    <p style={{fontSize: '13px', opacity: 0.7}}>129 m² - Configuración exclusiva y personalizada.</p>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                    case 2: return (
+                        <div>
+                            <h2 style={{fontSize: '28px'}}>Calidad de vida</h2>
+                            <ul style={{lineHeight: '2', opacity: 0.8}}>
+                                <li>Unidades con terminaciones de lujo.</li>
+                                <li>Ubicación privilegiada en San Isidro.</li>
+                                <li>Financiación flexible: Anticipo + Cuotas.</li>
+                                <li>Proyecto de Aureo Desarrollos.</li>
+                            </ul>
+                        </div>
+                    );
+                    case 3: return (
+                        <div style={{textAlign: 'center'}}>
+                            <h2 style={{fontSize: '32px'}}>¿Hablamos?</h2>
+                            <p style={{opacity: 0.7, marginBottom: '30px'}}>Agendá una breve reunión para conocer precios y planes de pago.</p>
+                            <button className="btn-action">Contactar a Enmanuel</button>
+                        </div>
+                    );
+                }
+            };
+
+            return (
+                <React.Fragment>
+                    <div className="nav-bar">
+                        {labels.map((l, i) => (
+                            <button 
+                                key={i} 
+                                className={`nav-item ${slide === i ? 'active' : ''}`}
+                                onClick={() => setSlide(i)}
+                            >
+                                {l}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="content">
+                        {renderSlide()}
+                    </div>
+                    <div className="footer">
+                        <span style={{fontSize: '10px', opacity: 0.4}}>Página {slide + 1} de 4</span>
+                        <div>
+                            <button 
+                                style={{background: 'transparent', border: '1px solid var(--muted)', color: 'var(--light)', padding: '8px 15px', marginRight: '10px', cursor: 'pointer'}}
+                                onClick={() => setSlide(Math.max(0, slide - 1))}
+                            >←</button>
+                            <button 
+                                style={{background: 'transparent', border: '1px solid var(--gold)', color: 'var(--gold)', padding: '8px 15px', cursor: 'pointer'}}
+                                onClick={() => setSlide(Math.min(3, slide + 1))}
+                            >→</button>
+                        </div>
+                    </div>
+                </React.Fragment>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
